@@ -35,11 +35,12 @@ body {
 }
 
 .blog-post {
-    border: 1px solid #4e4a4a;
+    border: 1px solid hsl(0, 80%, 28%);
     border-radius: 8px;
     margin: 20px 0;
     padding: 15px;
     width: 1000px;
+    background-color: #b5b6b7;
 }
 
 .blog-post img {
