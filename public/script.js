@@ -1,30 +1,11 @@
 // Sample data for navigation links
 const navLinks = [
-    { text: 'Home', href: '#' },
+    { text: 'Home', href: '/ ' },
     { text: 'About', href: '#about' },
     { text: 'Services', href: '#services' },
     { text: 'Contact', href: '#contact' },
 ];
  
-// Sample data for blog posts
-const blogData = [
-    {
-        title: 'Spacious Apartment',
-        date: 'December 1, 2023',
-        content: 'one bedroom apartment for rent   one double bed room  open plan Area..',
-        image: 'blog-image.jpg',
-        link: '#post1',
-    },
-    {
-        title: 'Spacious Apartment',
-        date: 'December 5, 2023',
-        content: '.one bedroom apartment for rent   one double bed room  open plan Area..',
-        image: 'blog-image.jpg',
-        link: '#post2',
-    },
-    // Add more blog data as needed
-];
-
 // Function to create navigation links
 function createNavLinks() {
     const navbar = document.getElementById('navbar');
@@ -41,6 +22,10 @@ function createNavLinks() {
 function createBlogPost(post) {
     const blogPost = document.createElement('div');
     blogPost.classList.add('blog-post');
+    
+    
+    
+    
 
     const image = document.createElement('img');
     image.src = post.image;
@@ -49,6 +34,7 @@ function createBlogPost(post) {
     const details = document.createElement('div');
     details.innerHTML = `
         <h2>${post.title}</h2>
+        <h3>${post.rent}</h3>
         <p>${post.date}</p>
         <p>${post.content}</p>
         <a href="${post.link}">Read More</a>
@@ -60,14 +46,21 @@ function createBlogPost(post) {
     return blogPost;
 }
 
-// Function to populate the blog container with dynamic content
-function populateBlogContainer() {
+// Function to populate the blog container with dynamic content from the server
+async function populateBlogContainer() {
     const blogContainer = document.getElementById('blogContainer');
 
-    blogData.forEach(post => {
-        const blogPost = createBlogPost(post);
-        blogContainer.appendChild(blogPost);
-    });
+    try {
+        const response = await fetch('http://localhost:6000/getUser'); // Change the URL to your server endpoint
+        const blogDataFromServer = await response.json();
+
+        blogDataFromServer.forEach(post => {
+            const blogPost = createBlogPost(post);
+            blogContainer.appendChild(blogPost);
+        });
+    } catch (error) {
+        console.error('Error fetching blog data:', error);
+    }
 }
 
 // Call the functions to create navigation links and populate the blog container
